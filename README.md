@@ -12,10 +12,13 @@
     <img alt="Numpy" src="https://img.shields.io/github/pipenv/locked/dependency-version/quiquereds/movieRecommender/numpy?style=for-the-badge">
   </a>
   
-<a href="https://surprise.readthedocs.io/en/stable/">
-    <img alt="Surprise" src="https://img.shields.io/github/pipenv/locked/dependency-version/quiquereds/movieRecommender/scikit-surprise?style=for-the-badge">
+<a href="https://pandas.pydata.org/docs/index.html">
+    <img alt="Pandas" src="https://img.shields.io/github/pipenv/locked/dependency-version/quiquereds/movieRecommender/pandas?style=for-the-badge">
   </a>
   
+  <a href="https://surprise.readthedocs.io/en/stable/">
+    <img alt="Surprise" src="https://img.shields.io/github/pipenv/locked/dependency-version/quiquereds/movieRecommender/scikit-surprise?style=for-the-badge">
+  </a>
 
 </p>
 
@@ -35,6 +38,6 @@ ___
 
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://go-skill-icons.vercel.app/api/icons?i=python,numpy&perline=7" />
+    <img src="https://go-skill-icons.vercel.app/api/icons?i=python,numpy,pandas&perline=7" />
   </a>
 </p>
