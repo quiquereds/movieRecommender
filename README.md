@@ -2,24 +2,22 @@
 <h2 align="center">Sistema simple de recomendación de películas</h2>
 <h4 align="center">Algoritmo de filtrado colaborativo (FC) para recomendación de películas</h4>
 
-<p align = "center">
+<p align="center">
  <a href="https://www.python.org/downloads/">
-    <img alt="Python - Python Version" src="https://img.shields.io/github/pipenv/locked/python-version/quiquereds/movieRecommender
-?style=for-the-badge">
+    <img alt="Python - Python Version" src="https://img.shields.io/github/pipenv/locked/python-version/quiquereds/movieRecommender?style=for-the-badge">
   </a>
-
  <a href="https://numpy.org/doc/stable/">
     <img alt="Numpy" src="https://img.shields.io/github/pipenv/locked/dependency-version/quiquereds/movieRecommender/numpy?style=for-the-badge">
   </a>
-  
-<a href="https://pandas.pydata.org/docs/index.html">
+  <a href="https://pandas.pydata.org/docs/index.html">
     <img alt="Pandas" src="https://img.shields.io/github/pipenv/locked/dependency-version/quiquereds/movieRecommender/pandas?style=for-the-badge">
   </a>
-  
   <a href="https://surprise.readthedocs.io/en/stable/">
     <img alt="Surprise" src="https://img.shields.io/github/pipenv/locked/dependency-version/quiquereds/movieRecommender/scikit-surprise?style=for-the-badge">
   </a>
-
+  <a href="https://scikit-learn.org/stable/getting_started.html">
+    <img alt="Scikit Learn" src="https://img.shields.io/github/pipenv/locked/dependency-version/quiquereds/movieRecommender/scikit-learn?style=for-the-badge">
+  </a>
 </p>
 
 
@@ -38,6 +36,6 @@ ___
 
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://go-skill-icons.vercel.app/api/icons?i=python,numpy,pandas&perline=7" />
+    <img src="https://go-skill-icons.vercel.app/api/icons?i=python,numpy,pandas,scikitlearn,perl,latex,vscode,jupyter&perline=8" />
   </a>
 </p>
