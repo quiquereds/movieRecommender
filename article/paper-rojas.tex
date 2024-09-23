@@ -58,7 +58,7 @@
 
 
 \begin{news}{2}
-        {¿Cómo Netflix conoce tus gustos?}
+        {¿Cómo es que Netflix lee mi mente?}
         {\textcolor{color}{José E. Rojas-Macedo} y \textcolor{color}{Ángel Hernández-Castañeda}}
         {Artículo enviado}
         {a3}
@@ -85,7 +85,7 @@ Para este artículo, se utilizó el enfoque basado en usuarios, el cual, como se
     \image{images/art/img1.png}{Figura 1. Funcionamiento del filtrado colaborativo basado en usuarios}
 \end{center} 
 
-\expandedtitle{lines}{El filtrado colaborativo utiliza datos de múltiples usuarios para ofrecer recomendaciones personalizadas.}
+\expandedtitle{lines}{El filtrado colaborativo es un tipo de algoritmo que puede conocerte mejor de lo que te conoces a ti.}
 
 \noindent\textcolor{color}{\Large{Metodología}}
 
@@ -104,15 +104,13 @@ Como primer paso para la construcción de un sistema de recomendación, es neces
 
 En este sentido, se utilizó un conjunto de datos de películas que incluye información sobre los usuarios, películas y valoraciones de los usuarios por película. El conjunto es una versión ligera de toda la base de datos de \textit{MovieLens}, una plataforma de recomendación de películas, que incluye alrededor de 100,000 valoraciones de 600 usuarios aplicadas a 9,000 películas hasta 2018 y que cuenta con alrededor de 3,600 etiquetas, compuesto de 4 archivos CSV: \textit{ratings.csv}, \textit{movies.csv}, \textit{links.csv} y \textit{tags.cvs}, de los cuales se utilizaron solamente los dos primeros.
 
-
-
 La necesidad de ILNBDs se ha incrementado últimamente, debido a que, con el crecimiento de las tecnologías, muchos usuarios solicitan acceder a la información (contenida en BDs) desde diferentes tipos de sistemas, tales como: computadoras, celulares, PDAs (por sus siglas en inglés, Personal Digital Assistants), etc. Incluso, el magnate de la computación, Bill Gates, afirmó: “las interfaces de lenguaje natural dominarán el desarrollo de las computadoras personales en la nueva década” [2][3].
 \\
 
 \noindent\textcolor{color}{\Large{Limitaciones}}
 
 Las interfaces de lenguaje natural para acceder a BDs han sido utilizadas desde finales de los 60s y principios de los 70s. Aunque se han desarrollado una gran cantidad de ILNBDs desde entonces, las limitaciones y deficiencias que poseen son de llamar la atención. Algunas ILNBDs comerciales ilustran esta situación; por ejemplo, LanguageAccess fue descontinuado por IBM; English Query (desarrollado por Microsoft) fue incluido por última vez en SQL Server ver. 8.0, liberado en el año 2000; English Wizard (desarrollado por Linguistic Technology Corporation) fue descontinuado hace algunos años; y finalmente, uno de los más exitosos, Access English Language Front End (ELF) desarrollado por ELF Software Co., aunque continúa su distribución la compañía ya no existe.
-\expandedtitle{lines}{El desempeño de una ILNBD esta ligado con la configuración de dominio, entre mejor configurado se encuentre, mayor es el entendimiento de las consultas por parte de la interfaz.}
+\expandedtitle{lines}{MovieLens: una base de datos que ha sido empleada en la investigación de sistemas de recomendación.}
 La mayoría de los usuarios de ILNBDs consideran que los sistemas existentes son  bastante robustos y precisos, pero esta evaluación es relativa; las ILNBDs que han obtenido buenos resultados (alrededor del 95\% de consultas correctamente traducidas) son de dominio específico ---es decir, aquéllas que  únicamente pueden consultar una sola BD--- mientras que las independientes de dominio ---es decir, aquéllas que pueden usarse para consultar diferentes BDs--- continúan teniendo deficiencias en el proceso de traducción (con una tasa de éxito entre el 80-90\%).
 
 Con respecto a la independencia de dominio, un factor que ha limitado el uso de las ILNBDs ha sido la dificultad para configurar dichos sistemas a una BD en particular, a menudo los administradores de BDs necesitan altos niveles de experiencia y llevan a cabo esta tarea empleando un largo tiempo de configuraci\'on [5]. 
