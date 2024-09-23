@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1727049878.57812 "c:/Users/quiqu/OneDrive/Documentos/Dev/movieRecommender/article/paper-rojas.tex" "paper-rojas.pdf" "paper-rojas" 1727049879.59203 0
+["pdflatex"] 1727061374.04082 "c:/Users/quiqu/OneDrive/Documentos/Dev/movieRecommender/article/paper-rojas.tex" "paper-rojas.pdf" "paper-rojas" 1727061375.0597 0
   "C:/Users/quiqu/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1727046532 82535 0266753fb37a3d673c1d739765ad059f ""
   "C:/Users/quiqu/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1726973869 11948197 2b6895d5256a298ce0151f0eedc4660e ""
   "C:/Users/quiqu/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/symbol/psyr.tfm" 1136793854 1408 5937f58aa508ea2cea4901c07d10f5fe ""
@@ -132,16 +132,16 @@
   "C:/Users/quiqu/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/quiqu/AppData/Local/Programs/MiKTeX/tex/latex/wrapfig/wrapfig.sty" 1044403200 26220 3701aebf80ccdef248c0c20dd062fea9 ""
   "C:/Users/quiqu/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
-  "c:/Users/quiqu/OneDrive/Documentos/Dev/movieRecommender/article/paper-rojas.tex" 1727049878 25801 73b3ade781cee92d1098aaf4b998d692 ""
+  "c:/Users/quiqu/OneDrive/Documentos/Dev/movieRecommender/article/paper-rojas.tex" 1727061373 26515 5c77bf0257b96142aa5ba922844ad75f ""
   "imagen/art2.eps" 1348695544 1528977 87f6f1f83927cc230da1dcbafae8d910 ""
   "imagen/art3.eps" 1348695554 2474200 c64595ccff0c9b1150f152b2f939bb81 ""
   "imagen/art4.eps" 1348695566 2517449 00f95089cc67d259a98d8c016c5de032 ""
   "images/art/img1.png" 1727049591 40051 55b3a841178e0f65f866a9c44852b4b0 ""
   "images/authors/angelhernandez.png" 1727033099 173091 f3adeab80ca85df2b9da280d9f2e3dc9 ""
   "images/authors/enriquerojas.png" 1727032903 167713 b7f32ee06858e60844c8ab1be7523b41 ""
-  "paper-rojas.aux" 1727049879 494 b8cd4250651edf0253c161c774183bba "pdflatex"
-  "paper-rojas.out" 1727049879 387 67b18603e78135fa0e3c22be174c8d39 "pdflatex"
-  "paper-rojas.tex" 1727049878 25801 73b3ade781cee92d1098aaf4b998d692 ""
+  "paper-rojas.aux" 1727061374 494 b8cd4250651edf0253c161c774183bba "pdflatex"
+  "paper-rojas.out" 1727061374 387 67b18603e78135fa0e3c22be174c8d39 "pdflatex"
+  "paper-rojas.tex" 1727061373 26515 5c77bf0257b96142aa5ba922844ad75f ""
   "papertexKS.cls" 1349989920 29740 3c4e2a148c2c5e4cd4bd66cab039e53d ""
   (generated)
   "paper-rojas.aux"

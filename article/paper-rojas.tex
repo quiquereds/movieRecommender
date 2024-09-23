@@ -73,22 +73,38 @@ Uno de los más utilizados, es el filtrado colaborativo (FC), una técnica que p
 
 Un algoritmo representa una secuencia de instrucciones precisas que permiten resolver un problema o ejecutar una tarea específica, como la receta para preparar un pastel. En los sistemas de recomendación, el algoritmo recibe como entrada un conjunto de datos, en este caso, puede incluir las películas que has visto y las valoraciones que has dado sobre el contenido. Con dicha información, el algoritmo busca patrones entre tus datos y los de miles o millones más para sugerir nuevos elementos.
 
-En un nivel básico, el FC cuenta con dos enfoques o métodos: basado en usuarios y basado en elementos (en este caso, películas). En el caso del primer enfoque, se identifican usuarios con gustos similares, de esta forma las películas que uno ha disfrutado se le recomiendan a otros. Por otro lado, en el segundo enfoque, se analizan las características de las películas 
+En un nivel básico, el FC cuenta con dos enfoques o métodos:  
+\begin{enumerate}
+    \item \textbf{Basado en usuarios:} Encuentra usuarios que tengan preferencias similares a un usuario para recomendarle películas que estos hayan disfrutado.
+    \item \textbf{Basado en elementos:} Encuentra películas que tengan características similares a las que un usuario ha disfrutado para recomendarle otras similares.
+\end{enumerate}
+En ambos casos, los algoritmos buscan patrones en los datos que pueden ser aprovechados para generar recomendaciones acertadas. Durante los últimos años, el filtrado colaborativo ha evolucionado con la integración de técnicas más avanzadas como la \textbf{Descomposición de Valores Singulares} (SVD) o \textbf{Factorización de Matrices} (MF), que permiten mejorar la precisión de las recomendaciones. 
 
-Para este ejemplo, se utilizó el enfoque basado en usuarios, el cual analiza las preferencias de los usuarios para determinar qué películas sugerir a cada persona. La ventaja de usar este enfoque es que, a diferencia del basado en elementos, este se basa en la experiencia de otros usuarios para hacer recomendaciones (ver Figura 1).
+Para este artículo, se utilizó el enfoque basado en usuarios, el cual, como se mencionó, analiza las preferencias de los usuarios para determinar qué películas sugerir a cada persona. La ventaja de usar este enfoque es que, a diferencia del basado en elementos, este se basa en la experiencia de otros usuarios para hacer recomendaciones (ver Figura 1).
 \begin{center}
     \image{images/art/img1.png}{Figura 1. Funcionamiento del filtrado colaborativo basado en usuarios}
 \end{center} 
 
 \expandedtitle{lines}{El filtrado colaborativo utiliza datos de múltiples usuarios para ofrecer recomendaciones personalizadas.}
 
+\noindent\textcolor{color}{\Large{Metodología}}
+
+Esta sección describe cómo se construyo el sistema de recomendación utilizando Python y la librería de Surprise:
+\begin{enumerate}
+    \item \textbf{Importación de datos:} Se utiliza un conjunto de datos de películas que incluye información sobre los usuarios, películas y valoraciones de los usuarios por película.
+    \item \textbf{Preprocesamiento de datos:} Los datos son limpiados y transformados en un formato adecuado para el entrenamiento del modelo. Para este proceso se usan las librerías de Pandas y Numpy.
+    \item \textbf{Entrenamiento del modelo:} Con la biblioteca Surprise se desarrolla el modelo, para ello, se utiliza la técnica de SVD. Este algoritmo descompone la matriz de las valoraciones de los usuarios en factores que representan las características de los usuarios y de las películas, para así generar recomendaciones más precisas.
+    \item \textbf{Evaluación del modelo:} El rendimiento del modelo se evalúa utilizando la métrica \textit{RMSE (Root Mean Squared Error)}, la cual, mide la diferencia entre las predicciones del modelo y las valoraciones reales de los usuarios.
+    \item \textbf{Generación de recomendaciones:} Se generan recomendaciones para un usuario específico mediante una función que manda a llamar al modelo de filtrado colaborativo.
+\end{enumerate} 
+
 \noindent\textcolor{color}{\Large{Importación de datos}}
 
-Como primer paso para la construcción de un sistema de recomendación, es necesario disponer de un conjunto de datos adecuado para el análisis y entrenamiento del algoritmo. En este sentido, se utilizó un conjunto de datos de películas que incluye información sobre los usuarios, películas y valoraciones de los usuarios por película. El conjunto es una versión ligera de toda la base de datos de \textit{MovieLens}, una plataforma de recomendación de películas, que incluye alrededor de 100,000 valoraciones de 600 usuarios aplicadas a 9,000 películas hasta 2018 y que cuenta con alrededor de 3,600 etiquetas.
+Como primer paso para la construcción de un sistema de recomendación, es necesario disponer de un conjunto de datos adecuado para el análisis y entrenamiento del algoritmo.
 
-Existen otro tipo de sistemas que suelen ser confundidos con las ILNBDs y son  conocidos como “Sistemas de Pregunta-Respuesta” (Q\&A, por sus siglas en inglés, Question and Answering). A diferencia de éstos, las ILNBDs, sólo pueden devolver un resultado, el cual se supone que tiene que ser el correcto. Los sistemas Q\&A retornan un conjunto de resultados (regularmente elegidos mediante reconocimiento de palabras clave), de los cuales el usuario necesita elegir el que considera correcto. Ejemplos de este tipo de sistemas son los buscadores en Internet, tales como Google, Yahoo, etc.
+En este sentido, se utilizó un conjunto de datos de películas que incluye información sobre los usuarios, películas y valoraciones de los usuarios por película. El conjunto es una versión ligera de toda la base de datos de \textit{MovieLens}, una plataforma de recomendación de películas, que incluye alrededor de 100,000 valoraciones de 600 usuarios aplicadas a 9,000 películas hasta 2018 y que cuenta con alrededor de 3,600 etiquetas, compuesto de 4 archivos CSV: \textit{ratings.csv}, \textit{movies.csv}, \textit{links.csv} y \textit{tags.cvs}, de los cuales se utilizaron solamente los dos primeros.
 
-Los principales beneficiarios de las ILNBDs son de dos tipos: los ejecutivos de empresas que necesitan formular consultas a las BDs de sus empresas de maneras que no están previstas en los sistemas de información corporativos, y usuarios de Internet que desearían consultar BDs con más flexibilidad que la disponible actualmente en las páginas de Web. Para estos usuarios, las consultas mal comprendidas por las ILNBDs pueden ocasionar que éstas entreguen a los usuarios resultados incorrectos o confusos, lo cual es potencialmente peligroso, ya que el usuario puede depender de estos resultados para tomar decisiones importantes. De aquí la importancia de desarrollar ILNBDs que tengan una alta confiabilidad.
+
 
 La necesidad de ILNBDs se ha incrementado últimamente, debido a que, con el crecimiento de las tecnologías, muchos usuarios solicitan acceder a la información (contenida en BDs) desde diferentes tipos de sistemas, tales como: computadoras, celulares, PDAs (por sus siglas en inglés, Personal Digital Assistants), etc. Incluso, el magnate de la computación, Bill Gates, afirmó: “las interfaces de lenguaje natural dominarán el desarrollo de las computadoras personales en la nueva década” [2][3].
 \\
