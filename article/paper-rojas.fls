@@ -1,6 +1,6 @@
-PWD c:\Users\quiqu\OneDrive\Documentos\Dev\movieRecommender\article
+PWD c:\Users\quiqu\Documents\Dev\movieRecommender\article
 INPUT C:\Users\quiqu\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\quiqu\OneDrive\Documentos\Dev\movieRecommender\article\paper-rojas.tex
+INPUT c:\Users\quiqu\Documents\Dev\movieRecommender\article\paper-rojas.tex
 OUTPUT paper-rojas.log
 INPUT .\papertexKS.cls
 INPUT papertexKS.cls
