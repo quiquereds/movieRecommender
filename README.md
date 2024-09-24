@@ -59,6 +59,10 @@ A continuación, se detallan los pasos para configurar este proyecto localmente 
 - Tener instaladas las extensiones de Python y Jupyter para activar el soporte de estas herramientas en el editor de código.
 - Instalar `pipenv` para trabajar con entornos virtuales de Python
 
+```bash
+pip install pipenv
+```
+
 ### Empezando:
 
 1. Utiliza git desde un directorio de tu preferencia para descargar el código a tu computadora
