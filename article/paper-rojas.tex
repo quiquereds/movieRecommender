@@ -68,184 +68,157 @@
 	%* Sección 1 [Introducción]
 	\noindent\textcolor{color}{\Large{Introducción}}
 
-	Dentro de la era digital, la personalización de servicios se ha convertido en una característica esencial para ofrecer una experiencia de usuario (UX) superior. Desde las plataformas de streaming, hasta algunos \textit{e-commerce}, utilizan sistemas de recomendación que nos ofrecen contenido, productos o servicios basados en nuestros gustos. ¿Cómo se logra esto? La respuesta está en el uso de algoritmos de recomendaciones.
+	Supongamos que acabas de ver una película que te fascinó, y al día siguiente, al abrir Netflix, te encuentras con una lista de recomendaciones que parece haber sido hecha a la medida de tus gustos. ¿Brujería? No exactamente, detrás de estas recomendaciones se encuentra un algoritmo de recomendación que analiza tus preferencias y las compara con las de otros usuarios o películas para sugerirte contenido que podría interesarte.
+	
+	Y no solo sucede en Netflix, dentro de la era digital, la personalización de servicios se ha convertido en una característica esencial para ofrecer una experiencia de usuario superior \cite{Deloitte2024}. Desde las plataformas de streaming, hasta algunos \textit{e-commerce}, usan estos algoritmos que nos ofrecen contenido, productos o servicios basados en nuestros gustos.
 
-	Uno de los más utilizados, es el filtrado colaborativo (FC), una técnica que permite que plataformas como Netflix, Amazon o Spotify ofrezcan contenido basado en lo que personas con gustos similares han disfrutado. En este artículo, se explorará una aproximación simple de cómo se construyen estos sistemas, de qué forma se entrenan y cómo se pueden desarrollar usando Python y la librería de Surprise.
+	El objetivo de este artículo es desvelar de forma simple una aproximación a la construcción de estos sistemas, los tipos de datos que se emplean y los pasos que se utilizan para generar predicciones.
 	\\
 
-	\noindent\textcolor{color}{\Large{El algoritmo detrás de las recomendaciones}}
+	\noindent\textcolor{color}{\Large{¿Cuál es la necesidad de estos sistemas?}}
 
-	Un algoritmo representa una secuencia de instrucciones precisas que permiten resolver un problema o ejecutar una tarea específica, como la receta para preparar un pastel. En los sistemas de recomendación, el algoritmo recibe como entrada un conjunto de datos, en este caso, puede incluir las películas que has visto y las valoraciones que has dado sobre el contenido. Con dicha información, el algoritmo busca patrones entre tus datos y los de miles o millones más para sugerir nuevos elementos.
+	A esta altura, sabrás que vivimos en una era digital en la que la cantidad de información disponible es abrumadora, y a la hora de tomar decisiones existe una sobreabundancia de opciones. Desde ese momento en el que te sientas en el sofá de tu casa y decides qué película ver, hasta el momento en el que decides qué producto comprar en línea, existe una saturación de alternativas. Con tantas opciones disponibles, uno pensaría que más es mejor, ¿cierto? Pero en realidad, sucede lo contrario: cuando uno se enfrenta a demasiadas alternativas, nuestra capacidad para tomar una decisión se ve comprometida, de acuerdo con el estudio y libro de \cite{schwartz2005qué}, esto se conoce como \textbf{"parálisis por exceso de opciones"}.
 
-	En un nivel básico, el FC cuenta con dos enfoques o métodos:
+	De hecho existió un estudio dentro de un supermercado en el que se ofrecían 24 variedades de mermelada, y otro en el que se ofrecían solo 6. Aunque la mesa con 24 variedades atrajo a más personas, la mesa con 6 variedades fue la que generó más ventas. Volviendo a lo que se comentó antes, esto se debe a que cuando se ofrecen demasiadas opciones, las personas se sienten abrumadas y se reduce su capacidad de decisión \cite{iyengar2011arte}.
+
+	Justo en este punto, es donde entra a la cancha el sistema de recomendación. Plataformas como Amazon, Netflix o Spotify utilizan algoritmos inteligentes para ayudarte a reducir la cantidad de opciones y mostrar solo lo que esté dentro de tus preferencias (Figura 1). De esta forma, el beneficio de estos sistemas no solo es aumentar la facilidad con la que tomamos una decisión, sino que también mejora la experiencia en la que consumimos servicios o productos.
+	
+	%* Figura 1
+	\begin{center}
+		\image{images/art/ejemplos.png}{Figura 1. Utilización de algoritmos de recomendación en plataformas digitales}
+	\end{center}
+	
+
+	\noindent\textcolor{color}{\Large{Sistemas de recomendación}}
+
+	Un sistema de recomendación, a grandes rasgos, es un algoritmo que predice la preferencia o interés de un usuario sobre un conjunto de elementos, tales como películas, productos o servicios. Estos sistemas se basan en la premisa de que si un usuario ha disfrutado de un conjunto de elementos en el pasado, es probable que disfrute de otros elementos similares en el futuro.
+
+	Un algoritmo representa una secuencia de instrucciones precisas que permiten resolver un problema o ejecutar una tarea específica, como la receta para preparar un pastel. En los sistemas de recomendación, el algoritmo recibe como entrada un conjunto de datos, en este caso, puede incluir las películas que has visto y las valoraciones que has dado sobre el contenido. Con dicha información, el algoritmo busca patrones entre tus datos y los de miles o millones más para sugerir nuevos elementos (Figura 2).
+
+	%* Figura 2
+	\begin{center}
+		\image{images/art/funcionamientoFC.png}{Figura 2. Funcionamiento un sistema de recomendación}
+	\end{center}
+
+	En otras palabras, se basan en el comportamiento pasado para predecir lo que te gustará en el futuro. Si alguna vez has calificado una película en Netflix o repetido una canción en Spotify, estas proporcionando datos de comportamiento explícitos e implícitos al sistema respectivamente e influyendo en las recomendaciones que recibes. Existen diferentes métodos para la creación de sistemas de recomendación, sin embargo, el que se propone en este artículo es el \textbf{Filtrado Colaborativo} (FC).
+
+	En un nivel básico, el FC cuenta con dos enfoques:
 
 	\begin{enumerate}
 		\item \textbf{Basado en usuarios:} Encuentra usuarios que tengan preferencias similares a un usuario para recomendarle películas que estos hayan disfrutado.
 		\item \textbf{Basado en elementos:} Encuentra películas que tengan características similares a las que un usuario ha disfrutado para recomendarle otras similares.
 	\end{enumerate}
 	
-    En ambos casos, los algoritmos buscan patrones en los datos que pueden ser aprovechados para generar recomendaciones acertadas. Durante los últimos años, el filtrado colaborativo ha evolucionado con la integración de técnicas más avanzadas como la \textbf{Descomposición de Valores Singulares} (SVD) o \textbf{Factorización de Matrices} (MF), que permiten mejorar la precisión de las recomendaciones.
+    En ambos casos, los algoritmos buscan patrones en los datos que pueden ser aprovechados para generar recomendaciones acertadas \cite{papadakis2022collaborative}. 
 
-	Para este artículo, se utilizó el enfoque basado en usuarios, el cual, como se mencionó, analiza las preferencias de los usuarios para determinar qué películas sugerir a cada persona. La ventaja de usar este enfoque es que, a diferencia del basado en elementos, este se basa en la experiencia de otros usuarios para hacer recomendaciones (ver Figura 1).
+	Para este artículo, se utilizó el enfoque basado en elementos, el cual, como se mencionó, analiza las características de las películas que un usuario ha disfrutado, para que el algoritmo busque películas que hayan sido valoradas de manera similar y que compartan características, al encontrar estos patrones, el sistema devuelve las opciones encontradas.
 
-	%* Figura 1
-	\begin{center}
-		\image{images/art/img1.png}{Figura 1. Funcionamiento del filtrado colaborativo basado en usuarios}
-	\end{center}
-
-	\expandedtitle{lines}{El filtrado colaborativo es un tipo de algoritmo que puede conocerte mejor de lo que te conoces a ti.}
+	\expandedtitle{lines}{Los sistemas de recomendación analizan miles o millones de datos para detectar patrones y sugerirte sugerencias personalizadas, o lo que también se conoce como hiperpersonalización.}
 
 	%* Sección 2 [Metodología]
 	\noindent\textcolor{color}{\Large{Metodología}}
 
-	Esta sección describe cómo se construyo el sistema de recomendación utilizando Python y la librería de Surprise:
+	Si actualmente cursas la preparatoria o tienes más de 20 años, muy seguramente te haya tocado conocer la cadena de Blockbuster, una tienda de alquiler de películas que se hizo famosa en los años 90 y principios de los 2000. Todos los días cientos de clientes entraban, miraban a los estantes y elegían una película para llevársela a su casa, incluso algunos empleados te recomendaban películas que podrían interesarte con base a tus preferencias que tú les contaras (justo lo que hace un algoritmo de FC). Era un servicio que solo algunos daban porque imagínate que todos tuvieran esa habilidad manual para recomendar películas a todos los clientes, además de la complejidad, sería un caos. La desaparición de esta cadena se debió a la llegada de Netflix, una plataforma que supo aprovechar este problema para ofrecer un servicio de recomendación personalizado, además a otros factores de su modelo de negocio desactualizado \cite{davis2013blockbuster}.
+
+	En esta sección, se va a describir la metodología utilizada para la construcción de un sistema de recomendación basado en filtrado colaborativo. El proceso se divide en las siguientes etapas:
 	\begin{enumerate}
-		\item \textbf{Importación de datos:} Se utiliza un conjunto de datos de películas que incluye información sobre los usuarios, películas y valoraciones de los usuarios por película.
-		\item \textbf{Preprocesamiento de datos:} Los datos son limpiados y transformados en un formato adecuado para el entrenamiento del modelo. Para este proceso se usan las librerías de Pandas y Numpy.
-		\item \textbf{Entrenamiento del modelo:} Con la biblioteca Surprise se desarrolla el modelo, para ello, se utiliza la técnica de SVD. Este algoritmo descompone la matriz de las valoraciones de los usuarios en factores que representan las características de los usuarios y de las películas, para así generar recomendaciones más precisas.
-		\item \textbf{Evaluación del modelo:} El rendimiento del modelo se evalúa utilizando la métrica \textit{RMSE (Root Mean Squared Error)}, la cual, mide la diferencia entre las predicciones del modelo y las valoraciones reales de los usuarios.
-		\item \textbf{Generación de recomendaciones:} Se generan recomendaciones para un usuario específico mediante una función que manda a llamar al modelo de filtrado colaborativo.
+		\item \textbf{Recolección y preparación de datos:} El primer paso consistió en conseguir un conjunto de datos de películas que incluyera información sobre los usuarios, películas y valoraciones de los usuarios por película, para ello, se utilizó el conjunto de datos de MovieLens
+		\item \textbf{Análisis exploratorio:} Antes de intentar hacer recomendaciones, primero se deben entender los datos, es decir, revisar todas las opiniones que existen y la cantidad que hay en el conjunto.
+		\item \textbf{Organización de la información:} Después de que se hace un análisis de los datos, se procede a su organización, en donde se combinaron los datos de las películas y las valoraciones para formar una tabla gigante, algo similar a lo que puedes ver en Excel, con filas y columnas. Pero existe un detalle, no todos los usuarios han visto todas las películas, este es el reto.
+		\item \textbf{Desarrollo del modelo:} El desafío consiste en rellenar esos huecos, para ello, el sistema debe literalmente adivinar qué tanto te gustaría \textit{Tetris} si no la has visto, basado en lo que ya has observado tú y otros usuarios. Para ello, se buscan patrones en las características de las películas que has visto y se comparan con las de otros usuarios para hacer recomendaciones, de esta forma, si viste \textit{Steve Jobs} y \textit{The Social Network}, el sistema podría recomendarte \textit{Tetris}, porque hablan sobre la vida de un emprendedor y la tecnología.
 	\end{enumerate}
 
+	%* Figura 3
+	\begin{center}
+		\image{images/art/metodologia.png}{Figura 4. Ilustración gráfica de la metodología utilizada}
+	\end{center}
+
 	%* Sección 3 [Importación de datos]
-	\noindent\textcolor{color}{\Large{Importación de datos}}
+	\noindent\textcolor{color}{\Large{Recolección y preparación de datos}}
     
-	Como primer paso para la construcción de un sistema de recomendación, es necesario disponer de un conjunto de datos adecuado para el análisis y entrenamiento del algoritmo.
-    
-	En este sentido, se utilizó un conjunto de datos de películas que incluye información sobre los usuarios, películas y valoraciones de los usuarios por película. El conjunto es una versión ligera de toda la base de datos de \textit{MovieLens}, una plataforma de recomendación de películas, que incluye alrededor de 100,000 valoraciones de 600 usuarios aplicadas a 9,000 películas hasta 2018 y que cuenta con alrededor de 3,600 etiquetas, compuesto de 4 archivos CSV: \textit{ratings.csv}, \textit{movies.csv}, \textit{links.csv} y \textit{tags.cvs}, de los cuales se utilizaron solamente los dos primeros.
-    
-	El conjunto de datos de MovieLens apareció por primera vez en 1998, esta es una plataforma de recomendación que solicita a sus usuarios realizar valoraciones a distintas películas, y así proporcionarles recomendaciones personalizadas (ver Figura 2); y describen las preferencias de los usuarios en cuanto a películas, los datos producidos toman forma de tupla con 4 datos principales: usuario, ID de la película, valoración (en escala de 0-5 estrellas) y marca de tiempo \cite{10.1145/2827872}.
-	\\
+	Como se había hablado, el primer paso es encontrar un conjunto de datos correcto que contenga la información relevante para realizar este tipo de sistemas. En el caso de este experimento, se utilizó un conjunto de datos de una plataforma de recomendaciones llamada MovieLens (ver Figura 3), que fue desarrollada por la Universidad de Michigan en 1998, y que ha sido utilizada en la investigación de sistemas de recomendación \cite{10.1145/2827872}.
 
-	%* Figura 2
+	%* Figura 3
 	\begin{center}
-		\image{images/art/img2.png}{Figura 2. Plataforma de MovieLens utilizando un sistema de recomendación}
+		\image{images/art/recomendacionMovielens.png}{Figura 3. Plataforma de MovieLens utilizando un sistema de recomendación}
 	\end{center}
 
-	Para este punto, se usó la librería de Pandas, la cual es una herramienta de código abierto diseñada para la manipulación y análisis de datos usando Python, de esta forma puede utilizarse este lenguaje para cargar, alinear, manipular e incluso fusionar datos. Como primer paso, se cargaron los datos de los archivos CSV y se almacenaron en un DataFrame de Pandas para su posterior procesamiento. En el Cuadro 1 y 2 se muestra un ejemplo de los datos de los archivos \textit{ratings.csv} y \textit{movies.csv}, respectivamente.
-	\\
+	El conjunto que se utilizó representa una versión ligera de toda la base de datos, se incluyen alrededor de 100,000 valoraciones de 600 usuarios aplicadas a 9,000 películas hasta 2018. Imagina que es como un cuaderno donde tienes apuntado lo han han visto tú y tus amigos, así como la calificación que le dan a la película. Toda esta información se almacena en dos archivos clave de este conjunto de datos, que contienen:
 
-	\begin{center}
-		%* Tabla 1
-		\begin{table*}
-			\begin{tabular}{|c|c|c|c|}
-				\hline
-				\rowcolor{Gray}
-				\textbf{userId} & \textbf{movieId} & \textbf{rating} & \textbf{timestamp} \\
-				\hline
-				1               & 1                & 4.0             & 964982703          \\
-				1               & 3                & 4.0             & 964981247          \\
-				1               & 6                & 4.0             & 964982224          \\
-				1               & 47               & 5.0             & 964983815          \\
-				1               & 50               & 5.0             & 964982931          \\
-				\hline
-			\end{tabular}
-			\caption{Dataframe de valoraciones}
-		\end{table*}
-		%* Tabla 2
-		\begin{table*}
-			\begin{tabular}{|c|c|c|}
-				\hline
-				\rowcolor{Gray}
-				\textbf{movieId} & \textbf{title}                     & \textbf{genres}                             \\
-				\hline
-				1                & Toy Story (1995)                   & Adventure|Animation|Children|Comedy|Fantasy \\
-				2                & Jumanji (1995)                     & Adventure|Children|Fantasy                  \\
-				3                & Grumpier Old Men (1995)            & Comedy|Romance                              \\
-				4                & Waiting to Exhale (1995)           & Comedy|Drama|Romance                        \\
-				5                & Father of the Bride Part II (1995) & Comedy                                      \\
-				\hline
-			\end{tabular}
-			\caption{Dataframe de películas}
-		\end{table*}
-	\end{center}
-
-	La visualización de los dataframes anteriores hace más sencilla la compresión de los tipos de datos que existen en el conjunto que se está evaluando, puede observarse que en el primero se muestra información de la película (ID, género y nombre de la película), mientras que en el segundo, las calificaciones que los usuarios han puesto sobre las películas (UserID, MovieID, calificación y estampa de tiempo).
-
-	\expandedtitle{lines}{MovieLens: una base de datos que ha sido empleada en la investigación de sistemas de recomendación.}
-
+	\begin{itemize}
+		\item \textbf{Listado de calificaciones (ratings.csv):} ¿Que películas vieron los usuarios y qué calificación les dieron?
+		\item \textbf{Listado de películas (movies.csv):} Detalles de la película como su nombre, géneros, etc.
+	\end{itemize}
+    
 	%* Sección 4 [Preprocesamiento de datos]
-	\noindent\textcolor{color}{\Large{Preprocesamiento de datos}}
+	\noindent\textcolor{color}{\Large{Análisis de datos}}
 
-	El preprocesamiento de datos resulta bastante importante para asegurar que los datos estén dentro de un formato adecuado para el entrenamiento del modelo, y así garantizar que el algoritmo pueda aprender de ellos. En este caso, se realizó la limpieza de los datos y la transformación de los mismos en un formato adecuado para el entrenamiento del modelo.
+	El siguiente paso es conocer el terreno en el que se está trabajando, y para ello, se realizó un análisis exploratorio de los datos recopilados.
 
-	El siguiente paso, es realizar una combinación de ambos dataframes para obtener un único dataframe que contenga toda la información necesaria para el entrenamiento del modelo. Para ello, se utilizó la función \textit{merge} de Pandas, la cual permite combinar dos dataframes a través de una columna en común, en este caso, la columna \textit{movieId}. El resultado se muestra en la Tabla 3.
+	¿A que se refiere esto? Volvamos al ejemplo del cuaderno de notas, ahora el siguiente paso es revisarlo. Para este punto, debemos entender cuántas películas han sido calificadas por cada usuario, cuáles son las más vistas y que tipo de valoraciones son las más comunes. Todo  este proceso, ayudará a identificar patrones importantes en los datos.
 
-	%* Tabla 3
-	\begin{table*}
-		\centering
-		\begin{tabular}{|c|c|c|c|c|}
-			\hline
-			\rowcolor{Gray}
-			\textbf{userId} & \textbf{movieId} & \textbf{rating} & \textbf{title} & \textbf{genres}                             \\
-			\hline
-			1               & 1                & 4.0             & 964982703      & Adventure|Animation|Children|Comedy|Fantasy \\
-			1               & 3                & 4.0             & 964981247      & Comedy|Romance                              \\
-			1               & 6                & 4.0             & 964982224      & Action|Crime|Thriller                       \\
-			1               & 47               & 5.0             & 964983815      & Mystery|Thriller                            \\
-			1               & 50               & 5.0             & 964982931      & Crime|Mystery|Thriller                      \\
-			\hline
-		\end{tabular}
-		\caption{Dataframe combinado de ratings y movies}
-	\end{table*}
+	Durante el primer análisis superficial, se encontró la siguiente información:
 
-    El siguiente paso, aunque puede verse un poco complejo, es tomar los datos de los usuarios, las películas y los géneros para convertirlos en una matriz de valores numéricos ordenados o binarios (0 y 1), es algo que resulta obligatorio para que una computadora pueda procesarlos de forma fácil en un sistema de recomendación.
-	
-    Para ello, se utilizaron algunas clases provenientes de la librería Scikit-learn, tales como \textit{LabelEncoder} y \textit{MultiLabelBinarizer} para convertir los datos categóricos en valores numéricos y binarios, respectivamente. El resultado se muestra en la Tabla 4.
+	\begin{itemize}
+		\item El conjunto de datos contiene 100,836 valoraciones de 610 usuarios. 
+		\item Existen 9,724 películas en el dataset.
+		\item El promedio de valoraciones por usuario es de 165 valoraciones.
+		\item El promedio de valoraciones por película es de 10 valoraciones.
+	\end{itemize}
 
-    Con los datos clasificados de esta nueva forma, se procedió a dividir el conjunto de datos en dos partes: una para entrenar el modelo y otra para evaluar su rendimiento. Para ello, se utilizó la función \textit{train\_test\_split} de Scikit-learn, la cual divide el conjunto de datos en dos partes, una para entrenamiento y otra para prueba, en este caso, se utilizó una proporción de 80\% para entrenamiento y 20\% para prueba.
-    \\
+	De manera gráfica, en la Figura 5, se muestra la distribución de las valoraciones, lo cual es importante para determinar si hay problemas de tendencia en los datos. En este caso, se observa que la mayoría de las valoraciones se encuentran en el rango de 3 a 4 estrellas, lo cual es un buen indicador de que el conjunto está equilibrado.
 
+	%* Figura 5
+	\begin{center}
+		\image{images/art/distribucionValoraciones.png}{Figura 5. Distribución de las valoraciones en el conjunto de datos}
+	\end{center}
+
+	Adicionalmente, será bastante común encontrar que aquellas películas que son altamente populares cuenten con muchas valoraciones, mientras que aquellas que no lo son, cuenten con pocas. Comprender esto es muy útil ya que ayuda a determinar si existe información suficiente para dar recomendaciones precisas o si hay escasez de información (lo que provocaría una falsa representación).
+
+	En el análisis, se encontró que la película con mejor calificación es \textit{Lamerica (1994)}, mientras que la peor calificación la tiene \textit{Gypsy (1962)}, profundizando un poco más, se encontró un detalle, la película de \textit{Lamerica} solo tiene 2 valoraciones, entonces hay una falsa representación. Si una película tiene una calificación muy alta, pero que solo ha sido evaluada por una minoría de la muestra de usuarios, no se puede considerar como una buena recomendación.
+
+	Para mitigar este problema, se utilizó el promedio bayesiano de las valoraciones, en donde en lugar de confiar únicamente en las calificaciones de los usuarios a una película, el promedio bayesiano combina estas calificaciones con el promedio global de todas las películas. Esto se hace para evitar que películas con muy pocas valoraciones tengan un impacto desproporcionado. Con este ajuste:
+
+	\begin{itemize}
+		\item La película con mejor calificación es \textit{Shawshank Redemption (1994)}.
+		\item La película con peor calificación es \textit{Speed 2: Cruise Control (1997)}.
+	\end{itemize}
+
+	El siguiente paso fue el análisis de los géneros de las películas, con el objetivo de determinar qué géneros son los más populares en el conjunto, de esta forma en la Figura 6 se muestra la distribución, donde se observa que los géneros más populares son \textit{Drama}, \textit{Comedia}, \textit{Thriller} y \textit{Acción}.
+
+	%* Figura 6
+	\begin{center}
+		\image{images/art/distribucionGeneros.png}{Figura 6. Distribución de los géneros en el conjunto de datos}
+	\end{center}
 
 	%* Sección 5 [Entrenamiento del modelo]
-	\noindent\textcolor{color}{\Large{Entrenamiento del modelo}}
+	\noindent\textcolor{color}{\Large{Organización de la información}}
 
-	Para el entrenamiento del modelo, se utilizó la librería de Surprise, la cual es una biblioteca de Python que proporciona una serie de algoritmos de recomendación listos para usar. En este caso, se utilizó el algoritmo SVD, el cual es una técnica de factorización matricial que descompone la matriz de valoraciones de los usuarios.
+	Hasta el momento, se han recolectado y analizado los datos, y tenemos dos listas, una con las películas y otra con las valoraciones de los usuarios, lo cual, en un sistema de recomendación no es útil, ya que necesitamos una tabla que contenga toda la información en un solo lugar, a lo que denominaremos \textit{matriz usuario-película}.
 
-	La implementación del modelo se muestra a continuación:
+	Esta matriz se puede entender como una tabla de Excel enorme, donde cada fila representa a un usuario, y cada columna, a una película. Dentro de la tabla, las celdas contienen las valoraciones que los usuarios han dado a las películas, y los espacios vacíos representan las películas que los usuarios no han visto.
 
-	\begin{lstlisting}[language=Python]
-        from surprise import Dataset, Reader
-        from surprise import SVD
-        from surprise.model_selection import cross_validate
+	Es decir, si Juan ha visto \textit{The Social Network} y le ha dado 5 estrellas, en la tabla, en la fila de Juan y la columna de \textit{The Social Network}, se colocará un 5. Si Juan no ha visto \textit{Tetris}, la celda correspondiente estará vacía. El objetivo del FC basado en elementos es determinar qué película le gustaría a Juan, basado en las películas que ha visto y las valoraciones que ha dado.
 
-        # Cargar el conjunto de datos
-        reader = Reader(rating_scale=(0.5, 5))
-        data = Dataset.load_from_df(df[['userId', 'movieId', 'rating']], reader)
-        
-        # Obtener el conjunto de entrenamiento
-        trainset = data.build_full_trainset()
-
-        # Entrenar el modelo
-        model_svd = SVD()
-        model_svd.fit(trainset)
-    \end{lstlisting}
-
-	En el código anterior, se carga el conjunto de datos en un objeto de tipo \textit{Dataset} de Surprise, el cual es necesario para el entrenamiento del modelo. Posteriormente, se crea una instancia del modelo SVD y se entrena con el conjunto de datos. 
-    \\ 
+	Para fines de eficiencia, se implementó un "mapa" de películas y usuarios en el que se asigna un identificador único a cada película y usuario, de esta forma, en lugar de trabajar con nombres, se trabaja con números, lo que permite al algoritmo determinar rápidamente dónde están ubicados los datos en la matriz.
+	\\ 
 
     %* Sección 6 [Evaluación del modelo]
-    \noindent\textcolor{color}{\Large{Evaluación del modelo}}
+    \noindent\textcolor{color}{\Large{Desarrollo del modelo}}
 
-    La evaluación del modelo es una parte fundamental para determinar su rendimiento y precisión en la generación de recomendaciones. En este caso, se utilizó la métrica \textit{RMSE} para evaluar el rendimiento del modelo. Esta métrica mide la diferencia entre las predicciones del modelo y las valoraciones reales de los usuarios, y se calcula como la raíz cuadrada de la media de los errores al cuadrado (Eq 1).
+    Finalmente, se llega a la parte más interesante, el desarrollo del modelo de recomendación. En este caso, se utilizó una técnica llamada \textbf{K-Nearest Neighbors} (KNN). 
 
-    \begin{equation}
-        RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}
-    \end{equation}
-    
-    Donde:
-    \begin{itemize}
-        \item $y_i$ es la valoración real del usuario $i$.
-        \item $\hat{y}_i$ es la predicción del modelo para el usuario $i$.
-        \item $n$ es el número total de usuarios.
-        \item $\sum$ es la suma de los errores al cuadrado.
-        \item $\sqrt{}$ es la raíz cuadrada.
-        \item $\frac{1}{n}$ es el promedio de los errores al cuadrado.
-    \end{itemize}
+	Al enfoque de recomendación de películas basado en otra película, le llamaremos \textbf{recomendaciones item-item}, lo que consiste en la identificación de las características de las películas y las relaciones que exista entre todo el conjunto. El sistema busca películas que hayan sido valoradas de forma similar por muchos usuarios, encuentra similitudes, realiza comparación de características y devuelve las recomendaciones.
 
-    El resultado de la evaluación del modelo fue de 0.475, lo que se traduce a que el modelo se está equivocando en promedio 0.475 estrellas en sus predicciones (recordemos que la escala de valoración es de 0 a 5 estrellas), lo cual es una buena métrica, ya que el error es relativamente bajo.
+	El algoritmo KNN se puede comprender como una red de tus amistades, en este caso, entre películas: aquellas que han tenido valoraciones similares por parte de muchos usuarios, se consideran amigas. Si te gustó \textit{El señor de los anillos}, el sistema podría recomendarte \textit{Harry Potter y La piedra filosofal} o \textit{El Hobbit}, porque comparte características con la primera, están en la misma categoría de fantasía (red de amigas) y han sido valoradas de forma similar.
 
+	Lo anterior, fue lo que se obtuvo exitosamente como resultado del experimento, se tomó la película \textit{Avengers: Era de Ultron} como película base y el algoritmo recomendó \textit{Guardianes de la Galaxia}, \textit{Thor: Un Mundo Oscuro} y \textit{Capitán America: Soldado del Invierno}, ¿Por qué? Volvemos al párrafo anterior, comparten características de que tratan de superhéroes, son del mismo universo cinematográfico (Marvel) y han sido valoradas de forma similar por los usuarios. 
+	\\ 
 
+	%* Sección 7 [Conclusiones]
+	\noindent\textcolor{color}{\Large{Conclusiones}}
+
+	Los sistemas de recomendación, como los que incorpora Netflix, en resumen son un ejemplo de cómo la tecnología puede ser utilizada para mejorar la experiencia del usuario utilizando los datos que generan. En este artículo, se ha presentado una aproximación a la construcción de un sistema de recomendación basado en filtrado colaborativo, que aunque su proceso es complejo, el objetivo es simple: hacer que disfrutes de tu contenido favorito, y aunque este algoritmo está lejos de ser incluso parecido al que utiliza Netflix, es un buen punto de partida para entender cómo funcionan estos sistemas y responder a tu pregunta de ¿cómo es que Netflix lee mi mente?
 
 	\newssep
 

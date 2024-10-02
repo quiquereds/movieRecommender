@@ -5,5 +5,8 @@
         "Macedo",
         "Numpy",
         "Scikit"
+    ],
+    "cSpell.ignoreWords": [
+        "ejemplos"
     ]
 }
