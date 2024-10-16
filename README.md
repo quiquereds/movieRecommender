@@ -12,10 +12,10 @@
   <a href="https://pandas.pydata.org/docs/index.html">
     <img alt="Pandas" src="https://img.shields.io/github/pipenv/locked/dependency-version/quiquereds/movieRecommender/pandas?style=for-the-badge">
   </a>
-  <a href="https://surprise.readthedocs.io/en/stable/">
+  <a href="https://matplotlib.org/">
     <img alt="Matplotlib" src="https://img.shields.io/github/pipenv/locked/dependency-version/quiquereds/movieRecommender/matplotlib?style=for-the-badge">
   </a>
-  <a href="https://surprise.readthedocs.io/en/stable/">
+  <a href="https://seaborn.pydata.org/">
     <img alt="Seaborn" src="https://img.shields.io/github/pipenv/locked/dependency-version/quiquereds/movieRecommender/seaborn?style=for-the-badge">
   </a>
   <a href="https://scikit-learn.org/stable/getting_started.html">
@@ -28,13 +28,7 @@ ___
 
 ## <img align="left" alt="Eyes" width="35px" style="padding-right:10px;" src="https://user-images.githubusercontent.com/70863031/214644849-1240d6f2-329f-46a9-8bc4-458d3d215ef8.gif"/> Descripción
 
-Este proyecto implementa un **sistema de recomendación de películas** utilizando el **algoritmo de filtrado colaborativo** con la técnica de **Descomposición en Valores Singulares (SVD)**. Los sistemas de recomendación son herramientas que sugieren ítems a los usuarios basándose en sus interacciones previas. En este caso, el sistema recomienda películas basándose en las calificaciones realizadas por usuarios anteriores.
-
-### Algoritmos y técnicas utilizadas:
-
-- **Filtrado Colaborativo basado en usuarios**: Se comparan las preferencias de usuarios para sugerirle recomendaciones a otros usuarios.
-- **Algoritmo SVD**: Es una técnica de factorización matricial popular para sistemas de recomendación.
-- **Evaluación del Modelo**: Se utilizan métricas de desempeño como **RMSE** (Error Cuadrático Medio) y **MAE** (Error Absoluto Medio) para evaluar la precisión de las recomendaciones.
+Este proyecto implementa un **sistema de recomendación de películas** utilizando el **algoritmo de filtrado colaborativo basado en contenido** con la técnica de **K-Nearest Neighbors (KNN)**. Los sistemas de recomendación son herramientas que sugieren ítems a los usuarios basándose en sus interacciones previas. En este caso, el sistema, dada una película de entrada, busca películas con características similares y que hayan sido calificadas de forma similar entre los usuarios.
 
 Este proyecto es ideal para quienes desean explorar el uso de la inteligencia artificial en sistemas de recomendación y aprender a implementar soluciones con datasets del mundo real como **MovieLens**.
 
@@ -44,7 +38,6 @@ Este proyecto es ideal para quienes desean explorar el uso de la inteligencia ar
 El proyecto está desarrollado con las siguientes librerías y herramientas:
 
 - **Python 3.12+**
-- [**Surprise**](https://surpriselib.com)
 - [**Dataset MovieLens**](https://grouplens.org/datasets/movielens/) (Conjunto de datos para investigación de sistemas de recomendación)
 - **Jupyter Notebook**
 
@@ -120,7 +113,7 @@ Existen múltiples herramientas para trabajar con LaTeX, sin embargo, las interf
 
 ## <img align="left" alt="Rocket" width="35px" style="padding-right:10px;" src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44b_1f3fb/512.webp"/> Autores
 
-- **Nicolas Hug** - Librería Surprise
+
 - **F. Maxwell Harper and Joseph A. Konstan** - MovieLens Dataset
 
 ---
