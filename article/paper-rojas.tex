@@ -75,6 +75,7 @@
 	El objetivo de este artículo es desvelar de forma simple una aproximación a la construcción de estos sistemas, los tipos de datos que se emplean y los pasos que se utilizan para generar predicciones.
 	\\
 
+	%* Sección 2 [¿Cuál es la necesidad de estos sistemas?]
 	\noindent\textcolor{color}{\Large{¿Cuál es la necesidad de estos sistemas?}}
 
 	A esta altura, sabrás que vivimos en una era digital en la que la cantidad de información disponible es abrumadora, y a la hora de tomar decisiones existe una sobreabundancia de opciones. Desde ese momento en el que te sientas en el sofá de tu casa y decides qué película ver, hasta el momento en el que decides qué producto comprar en línea, existe una saturación de alternativas. Con tantas opciones disponibles, uno pensaría que más es mejor, ¿cierto? Pero en realidad, sucede lo contrario: cuando uno se enfrenta a demasiadas alternativas, nuestra capacidad para tomar una decisión se ve comprometida, de acuerdo con el estudio y libro de \cite{schwartz2005qué}, esto se conoce como \textbf{"parálisis por exceso de opciones"}.
@@ -88,7 +89,7 @@
 		\image{images/art/ejemplos.png}{Figura 1. Utilización de algoritmos de recomendación en plataformas digitales}
 	\end{center}
 	
-
+	%* Sección 3 [Sistemas de recomendación]
 	\noindent\textcolor{color}{\Large{Sistemas de recomendación}}
 
 	Un sistema de recomendación, a grandes rasgos, es un algoritmo que predice la preferencia o interés de un usuario sobre un conjunto de elementos, tales como películas, productos o servicios. Estos sistemas se basan en la premisa de que si un usuario ha disfrutado de un conjunto de elementos en el pasado, es probable que disfrute de otros elementos similares en el futuro.
@@ -115,7 +116,7 @@
 
 	\expandedtitle{lines}{Los sistemas de recomendación analizan miles o millones de datos para detectar patrones y sugerirte sugerencias personalizadas, o lo que también se conoce como hiperpersonalización.}
 
-	%* Sección 2 [Metodología]
+	%* Sección 4 [Metodología]
 	\noindent\textcolor{color}{\Large{Metodología}}
 
 	Si actualmente cursas la preparatoria o tienes más de 20 años, muy seguramente te haya tocado conocer la cadena de Blockbuster, una tienda de alquiler de películas que se hizo famosa en los años 90 y principios de los 2000. Todos los días cientos de clientes entraban, miraban a los estantes y elegían una película para llevársela a su casa, incluso algunos empleados te recomendaban películas que podrían interesarte con base a tus preferencias que tú les contaras (justo lo que hace un algoritmo de FC). Era un servicio que solo algunos daban porque imagínate que todos tuvieran esa habilidad manual para recomendar películas a todos los clientes, además de la complejidad, sería un caos. La desaparición de esta cadena se debió a la llegada de Netflix, una plataforma que supo aprovechar este problema para ofrecer un servicio de recomendación personalizado, además a otros factores de su modelo de negocio desactualizado \cite{davis2013blockbuster}.
@@ -133,12 +134,12 @@
 		\image{images/art/metodologia.png}{Figura 4. Ilustración gráfica de la metodología utilizada}
 	\end{center}
 
-	%* Sección 3 [Importación de datos]
+	%* Sección 5 [Recolección y preparación de datos]
 	\noindent\textcolor{color}{\Large{Recolección y preparación de datos}}
     
 	Como se había hablado, el primer paso es encontrar un conjunto de datos correcto que contenga la información relevante para realizar este tipo de sistemas. En el caso de este experimento, se utilizó un conjunto de datos de una plataforma de recomendaciones llamada MovieLens (ver Figura 3), que fue desarrollada por la Universidad de Michigan en 1998, y que ha sido utilizada en la investigación de sistemas de recomendación \cite{10.1145/2827872}.
 
-	%* Figura 3
+	%* Figura 4
 	\begin{center}
 		\image{images/art/recomendacionMovielens.png}{Figura 3. Plataforma de MovieLens utilizando un sistema de recomendación}
 	\end{center}
@@ -150,14 +151,14 @@
 		\item \textbf{Listado de películas (movies.csv):} Detalles de la película como su nombre, géneros, etc.
 	\end{itemize}
     
-	%* Sección 4 [Preprocesamiento de datos]
+	%* Sección 6 [Análisis de datos]
 	\noindent\textcolor{color}{\Large{Análisis de datos}}
 
 	El siguiente paso es conocer el terreno en el que se está trabajando, y para ello, se realizó un análisis exploratorio de los datos recopilados.
 
 	¿A que se refiere esto? Volvamos al ejemplo del cuaderno de notas, ahora el siguiente paso es revisarlo. Para este punto, debemos entender cuántas películas han sido calificadas por cada usuario, cuáles son las más vistas y que tipo de valoraciones son las más comunes. Todo  este proceso, ayudará a identificar patrones importantes en los datos.
 
-	Durante el primer análisis superficial, se encontró la siguiente información:
+	Durante el primer análisis exploratorio, se encontró la siguiente información:
 
 	\begin{itemize}
 		\item El conjunto de datos contiene 100,836 valoraciones de 610 usuarios. 
@@ -191,7 +192,7 @@
 		\image{images/art/distribucionGeneros.png}{Figura 6. Distribución de los géneros en el conjunto de datos}
 	\end{center}
 
-	%* Sección 5 [Entrenamiento del modelo]
+	%* Sección 7 [Organización de la información]
 	\noindent\textcolor{color}{\Large{Organización de la información}}
 
 	Hasta el momento, se han recolectado y analizado los datos, y tenemos dos listas, una con las películas y otra con las valoraciones de los usuarios, lo cual, en un sistema de recomendación no es útil, ya que necesitamos una tabla que contenga toda la información en un solo lugar, a lo que denominaremos \textit{matriz usuario-película}.
@@ -203,7 +204,7 @@
 	Para fines de eficiencia, se implementó un "mapa" de películas y usuarios en el que se asigna un identificador único a cada película y usuario, de esta forma, en lugar de trabajar con nombres, se trabaja con números, lo que permite al algoritmo determinar rápidamente dónde están ubicados los datos en la matriz.
 	\\ 
 
-    %* Sección 6 [Evaluación del modelo]
+    %* Sección 8 [Desarrollo del modelo]
     \noindent\textcolor{color}{\Large{Desarrollo del modelo}}
 
     Finalmente, se llega a la parte más interesante, el desarrollo del modelo de recomendación. En este caso, se utilizó una técnica llamada \textbf{K-Nearest Neighbors} (KNN). 
@@ -215,7 +216,7 @@
 	Lo anterior, fue lo que se obtuvo exitosamente como resultado del experimento, se tomó la película \textit{Avengers: Era de Ultron} como película base y el algoritmo recomendó \textit{Guardianes de la Galaxia}, \textit{Thor: Un Mundo Oscuro} y \textit{Capitán America: Soldado del Invierno}, ¿Por qué? Volvemos al párrafo anterior, comparten características de que tratan de superhéroes, son del mismo universo cinematográfico (Marvel) y han sido valoradas de forma similar por los usuarios. 
 	\\ 
 
-	%* Sección 7 [Conclusiones]
+	%* Sección 9 [Conclusiones]
 	\noindent\textcolor{color}{\Large{Conclusiones}}
 
 	Los sistemas de recomendación, como los que incorpora Netflix, en resumen son un ejemplo de cómo la tecnología puede ser utilizada para mejorar la experiencia del usuario utilizando los datos que generan. En este artículo, se ha presentado una aproximación a la construcción de un sistema de recomendación basado en filtrado colaborativo, que aunque su proceso es complejo, el objetivo es simple: hacer que disfrutes de tu contenido favorito, y aunque este algoritmo está lejos de ser incluso parecido al que utiliza Netflix, es un buen punto de partida para entender cómo funcionan estos sistemas y responder a tu pregunta de ¿cómo es que Netflix lee mi mente?
